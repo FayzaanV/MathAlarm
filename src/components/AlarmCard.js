@@ -7,7 +7,7 @@ const AlarmCard = ({ time }) => (
   </View>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ //test test 1 2 1 2
   card: {
     padding: 20,
     margin: 10,
