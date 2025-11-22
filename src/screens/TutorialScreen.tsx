@@ -1,26 +1,27 @@
 // src/screens/TutorialScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, Text } from 'react-native';
+import BackButton from '../components/BackButton';
+import globalStyles from '../styles/global';
 
 export default function TutorialScreen() {
-  const nav = useNavigation();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Shortcuts Setup Tutorial</Text>
-      <Text style={styles.paragraph}>
-        Provide step-by-step instructions here for teammates to wire Shortcuts to the app.
+    <ScrollView style={globalStyles.container}>
+      <BackButton />
+
+      <Text style={globalStyles.title}>How to Set Up Shortcuts</Text>
+      <Text style={globalStyles.text}>
+        MathAlarm is designed to work with iOS Shortcuts. Follow these steps:
       </Text>
-      <TouchableOpacity onPress={() => nav.goBack()} style={styles.back}>
-        <Text style={styles.backText}>Back</Text>
-      </TouchableOpacity>
+
+      <Text style={globalStyles.step}>1. Open the Shortcuts app on your device.</Text>
+      <Text style={globalStyles.step}>2. Create a new automation for your alarm time.</Text>
+      <Text style={globalStyles.step}>3. Add the MathAlarm app as the action.</Text>
+      <Text style={globalStyles.step}>4. Save and enable the automation.</Text>
+
+      <Text style={globalStyles.footerText}>
+        Once set up, MathAlarm will require solving math problems to dismiss your alarm.
+      </Text>
     </ScrollView>
   );
 }
-const styles = StyleSheet.create({
-  container:{padding:24,backgroundColor:'#fff',flexGrow:1},
-  title:{fontSize:22,fontWeight:'700',marginBottom:12},
-  paragraph:{color:'#444',lineHeight:22},
-  back:{marginTop:24},
-  backText:{color:'#2E7DFA'}
-});

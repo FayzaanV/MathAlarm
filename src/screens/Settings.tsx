@@ -1,22 +1,40 @@
-// src/screens/SettingsScreen.tsx
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// src/screens/Settings.tsx
+import React, { useContext } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { DifficultyContext } from '../context/DifficultyContext';
+import BackButton from '../components/BackButton';
+import globalStyles from '../styles/global';
 
 export default function SettingsScreen() {
-  const nav = useNavigation();
+  const { difficulty, setDifficulty } = useContext(DifficultyContext);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-      <TouchableOpacity onPress={() => nav.goBack()} style={styles.back}>
-        <Text style={styles.backText}>Back</Text>
+    <View style={globalStyles.container}>
+      <BackButton />
+
+      <Text style={globalStyles.title}>Settings</Text>
+      <Text style={globalStyles.subtitle}>Select Difficulty</Text>
+
+      <TouchableOpacity
+        style={[globalStyles.button, difficulty === 'easy' && globalStyles.primaryButton]}
+        onPress={() => setDifficulty('easy')}
+      >
+        <Text style={globalStyles.buttonText}>Easy</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[globalStyles.button, difficulty === 'medium' && globalStyles.primaryButton]}
+        onPress={() => setDifficulty('medium')}
+      >
+        <Text style={globalStyles.buttonText}>Medium</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[globalStyles.button, difficulty === 'hard' && globalStyles.primaryButton]}
+        onPress={() => setDifficulty('hard')}
+      >
+        <Text style={globalStyles.buttonText}>Hard</Text>
       </TouchableOpacity>
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container:{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:'#fff'},
-  title:{fontSize:22,fontWeight:'700',marginBottom:12},
-  back:{marginTop:20},
-  backText:{color:'#2E7DFA'}
-});

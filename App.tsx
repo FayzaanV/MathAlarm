@@ -1,7 +1,11 @@
-// App.tsx (replace file contents)
 import React from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
+import { DifficultyProvider } from './src/context/DifficultyContext';
 
 export default function App() {
-  return <AppNavigator />;
+  return (
+    <DifficultyProvider>
+      <AppNavigator />
+    </DifficultyProvider>
+  );
 }

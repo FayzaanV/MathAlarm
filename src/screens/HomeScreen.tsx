@@ -1,8 +1,10 @@
+// src/screens/HomeScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
+import globalStyles from '../styles/global';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -10,62 +12,44 @@ export default function HomeScreen() {
   const navigation = useNavigation<NavProp>();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={globalStyles.container}>
+      <View style={globalStyles.header}>
         {/* Replace source with your app logo in src/assets and require it here */}
         <Image
-          source={require('C:/ReactNativeProjects/MathAlarm/src/assets/logo.png')}
-          style={styles.logo}
+          source={require('../assets/logo.png')}
+          style={globalStyles.logo}
           resizeMode="contain"
         />
-        <Text style={styles.title}>MathAlarm</Text>
+        <Text style={globalStyles.title}>MathAlarm</Text>
       </View>
 
-      <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}>
-          <Text style={styles.buttonText}>Settings</Text>
+      {/* Inline style for the buttons wrapper */}
+      <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+        <TouchableOpacity
+          style={globalStyles.button}
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Text style={globalStyles.buttonText}>Settings</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Tutorial')}>
-          <Text style={styles.buttonText}>How to set up Shortcuts</Text>
+        <TouchableOpacity
+          style={globalStyles.button}
+          onPress={() => navigation.navigate('Tutorial')}
+        >
+          <Text style={globalStyles.buttonText}>How to set up Shortcuts</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate('Practice')}>
-          <Text style={styles.primaryButtonText}>Practice Problem</Text>
+        <TouchableOpacity
+          style={globalStyles.primaryButton}
+          onPress={() => navigation.navigate('Practice')}
+        >
+          <Text style={globalStyles.primaryButtonText}>Practice Problem</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Built for Shortcuts-driven alarms</Text>
+      <View style={globalStyles.footer}>
+        <Text style={globalStyles.footerText}>Built for Shortcuts-driven alarms</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff', paddingHorizontal: 24, paddingTop: 60 },
-  header: { alignItems: 'center', marginBottom: 40 },
-  logo: { width: 88, height: 88, marginBottom: 12 },
-  title: { fontSize: 28, fontWeight: '700', color: '#0B1220' },
-  buttons: { flex: 1, justifyContent: 'flex-start' },
-  button: {
-    backgroundColor: '#F4F6F9',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    marginBottom: 14,
-    alignItems: 'center',
-  },
-  buttonText: { color: '#1B2545', fontSize: 16, fontWeight: '600' },
-  primaryButton: {
-    marginTop: 12,
-    backgroundColor: '#2E7DFA',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  primaryButtonText: { color: '#fff', fontSize: 16, fontWeight: '700' },
-  footer: { paddingVertical: 20, alignItems: 'center' },
-  footerText: { color: '#8891A6', fontSize: 13 },
-});
