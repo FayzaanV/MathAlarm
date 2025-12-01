@@ -4,51 +4,52 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
-import globalStyles from '../styles/global';
+import { useThemeStyles } from '../hooks/useThemeStyles';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavProp>();
+  const { styles } = useThemeStyles();
 
   return (
-    <View style={globalStyles.container}>
-      <View style={globalStyles.header}>
+    <View style={styles.container}>
+      <View style={styles.header}>
         {/* Replace source with your app logo in src/assets and require it here */}
         <Image
           source={require('../assets/logo.png')}
-          style={globalStyles.logo}
+          style={styles.logo}
           resizeMode="contain"
         />
-        <Text style={globalStyles.title}>MathAlarm</Text>
+        <Text style={styles.title}>MathAlarm</Text>
       </View>
 
       {/* Inline style for the buttons wrapper */}
       <View style={{ flex: 1, justifyContent: 'flex-start' }}>
         <TouchableOpacity
-          style={globalStyles.button}
+          style={styles.button}
           onPress={() => navigation.navigate('Settings')}
         >
-          <Text style={globalStyles.buttonText}>Settings</Text>
+          <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={globalStyles.button}
+          style={styles.button}
           onPress={() => navigation.navigate('Tutorial')}
         >
-          <Text style={globalStyles.buttonText}>How to set up Shortcuts</Text>
+          <Text style={styles.buttonText}>How to set up Shortcuts</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={globalStyles.primaryButton}
+          style={styles.primaryButton}
           onPress={() => navigation.navigate('Practice')}
         >
-          <Text style={globalStyles.primaryButtonText}>Practice Problem</Text>
+          <Text style={styles.primaryButtonText}>Practice Problem</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={globalStyles.footer}>
-        <Text style={globalStyles.footerText}>Built for Shortcuts-driven alarms</Text>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Built for Shortcuts-driven alarms</Text>
       </View>
     </View>
   );
