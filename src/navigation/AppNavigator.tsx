@@ -16,9 +16,22 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// 🚀 Add your deep link config here
+const linking = {
+  prefixes: ['mathalarm://'],   // Your custom URL scheme
+  config: {
+    screens: {
+      Practice: 'startProblem', // mathalarm://startProblem → PracticeScreen
+      Home: 'home',             // Optional: mathalarm://home → HomeScreen
+      Settings: 'settings',     // Optional
+      Tutorial: 'tutorial',     // Optional
+    },
+  },
+};
+
 export default function AppNavigator() {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
