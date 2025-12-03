@@ -85,8 +85,8 @@ export const getGlobalStyles = (theme: Theme = 'light') => {
       paddingTop: 20,
     },
     logo: {
-      width: 100,
-      height: 100,
+      width: 180,
+      height: 180,
       marginBottom: 16,
       shadowColor: isDark ? colors.primary : colors.primary,
       shadowOffset: { width: 0, height: 4 },

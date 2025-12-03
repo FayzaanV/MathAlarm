@@ -1,6 +1,6 @@
 // src/screens/PracticeScreen.tsx
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Linking, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Linking, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { DifficultyContext } from '../context/DifficultyContext';
 import { generateQuestion } from '../utils/questionGenerator';
 import { useNavigation } from '@react-navigation/native';
@@ -78,29 +78,39 @@ export default function PracticeScreen() {
   };
 
   return (
-    <View style={[styles.container, { alignItems: 'center', justifyContent: 'center' }]}>
-      <Text style={styles.title}>Solve to Disable Alarm</Text>
-      <Text style={[styles.subtitle, { marginBottom: 32 }]}>Solve this problem to turn off your alarm</Text>
-      
-      <View style={styles.card}>
-        <Text style={[styles.text, { fontSize: 24, fontWeight: '700', marginBottom: 32, color: colors.neutral[900] }]}>
-          {q.question}
-        </Text>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+    >
+      <ScrollView 
+        contentContainerStyle={{ flexGrow: 1, alignItems: 'center', paddingTop: 40 }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.title}>Solve to Disable Alarm</Text>
+        <Text style={[styles.subtitle, { marginBottom: 32 }]}>Solve this problem to turn off your alarm</Text>
+        
+        <View style={styles.card}>
+          <Text style={[styles.text, { fontSize: 24, fontWeight: '700', marginBottom: 32, color: colors.neutral[900] }]}>
+            {q.question}
+          </Text>
 
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={input}
-          onChangeText={setInput}
-          placeholder="Enter answer"
-          placeholderTextColor={styles.footerText.color}
-          autoFocus={true}
-        />
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={input}
+            onChangeText={setInput}
+            placeholder="Enter answer"
+            placeholderTextColor={styles.footerText.color}
+            autoFocus={true}
+          />
 
-        <TouchableOpacity style={styles.primaryButton} onPress={checkAnswer}>
-          <Text style={styles.primaryButtonText}>Submit Answer</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <TouchableOpacity style={styles.primaryButton} onPress={checkAnswer}>
+            <Text style={styles.primaryButtonText}>Submit Answer</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

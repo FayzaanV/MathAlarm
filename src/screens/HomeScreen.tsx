@@ -10,18 +10,17 @@ type NavProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavProp>();
-  const { styles } = useThemeStyles();
+  const { styles, theme } = useThemeStyles();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         {/* Replace source with your app logo in src/assets and require it here */}
         <Image
-          source={require('../assets/logo.png')}
+          source={theme === 'dark' ? require('../assets/logo-inverted.png') : require('../assets/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
-        <Text style={styles.title}>MathAlarm</Text>
       </View>
 
       {/* Inline style for the buttons wrapper */}

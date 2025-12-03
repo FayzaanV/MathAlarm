@@ -9,7 +9,7 @@ import { useThemeStyles } from '../hooks/useThemeStyles';
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
 
 interface BackButtonProps {
-  to?: keyof RootStackParamList; // default is 'Home'
+  to?: keyof RootStackParamList; // fallback route if can't go back
   label?: string;                // default is "← Back"
 }
 
@@ -17,10 +17,21 @@ export default function BackButton({ to = 'Home', label = '← Back' }: BackButt
   const navigation = useNavigation<NavProp>();
   const { styles, colors } = useThemeStyles();
 
+  const handlePress = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      // Fallback if there's no previous screen (e.g., opened via deep link)
+      navigation.navigate(to);
+    }
+  };
+
   return (
     <TouchableOpacity 
       style={{ marginBottom: 20, alignSelf: 'flex-start' }} 
-      onPress={() => navigation.navigate(to)}
+      onPress={handlePress}
+      activeOpacity={0.7}
+      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
     >
       <Text style={{ fontSize: 16, color: colors.primary, fontWeight: '600' }}>
         {label}
