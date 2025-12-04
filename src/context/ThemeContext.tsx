@@ -50,7 +50,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     setThemeState((prev) => {
       const newTheme = prev === 'light' ? 'dark' : 'light';
       if (AsyncStorage) {
-        AsyncStorage.setItem('theme', newTheme).catch((error) =>
+        AsyncStorage.setItem('theme', newTheme).catch((error: any) =>
           console.error('Failed to save theme:', error)
         );
       }
@@ -61,7 +61,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     if (AsyncStorage) {
-      AsyncStorage.setItem('theme', newTheme).catch((error) =>
+      AsyncStorage.setItem('theme', newTheme).catch((error: any) =>
         console.error('Failed to save theme:', error)
       );
     }
