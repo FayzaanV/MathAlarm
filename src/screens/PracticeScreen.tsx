@@ -1,6 +1,6 @@
 // src/screens/PracticeScreen.tsx
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Linking, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Linking, Platform, ScrollView } from 'react-native';
 import { DifficultyContext } from '../context/DifficultyContext';
 import { generateQuestion } from '../utils/questionGenerator';
 import { useNavigation } from '@react-navigation/native';
@@ -29,7 +29,7 @@ export default function PracticeScreen() {
     try {
       // Check if the Shortcuts URL scheme is supported
       const canOpen = await Linking.canOpenURL(SHORTCUT_URL);
-      
+
       if (canOpen) {
         // Open the Shortcut
         await Linking.openURL(SHORTCUT_URL);
@@ -54,7 +54,7 @@ export default function PracticeScreen() {
   const handleCorrectAnswer = async () => {
     // Trigger the DisableAlarm Shortcut
     await triggerDisableAlarmShortcut();
-    
+
     // Navigate to Home
     navigation.navigate('Home');
   };
@@ -65,9 +65,9 @@ export default function PracticeScreen() {
         '✅ Correct!',
         'Great job! Your alarm will be disabled.',
         [
-          { 
-            text: 'OK', 
-            onPress: handleCorrectAnswer 
+          {
+            text: 'OK',
+            onPress: handleCorrectAnswer
           },
         ]
       );
@@ -78,19 +78,15 @@ export default function PracticeScreen() {
   };
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
-    >
-      <ScrollView 
-        contentContainerStyle={{ flexGrow: 1, alignItems: 'center', paddingTop: 40 }}
+    <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, alignItems: 'center', paddingTop: 20 }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
         <Text style={styles.title}>Solve to Disable Alarm</Text>
         <Text style={[styles.subtitle, { marginBottom: 32 }]}>Solve this problem to turn off your alarm</Text>
-        
+
         <View style={styles.card}>
           <Text style={[styles.text, { fontSize: 24, fontWeight: '700', marginBottom: 32, color: colors.neutral[900] }]}>
             {q.question}
@@ -111,6 +107,6 @@ export default function PracticeScreen() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 }

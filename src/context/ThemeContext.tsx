@@ -1,5 +1,6 @@
 // src/context/ThemeContext.tsx
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type Theme = 'light' | 'dark';
 
@@ -13,19 +14,42 @@ interface ThemeContextType {
 export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
   isDark: false,
-  toggleTheme: () => {},
-  setTheme: () => {},
+  toggleTheme: () => { },
+  setTheme: () => { },
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setThemeState] = useState<Theme>('light');
 
+  useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        const savedTheme = await AsyncStorage.getItem('theme');
+        if (savedTheme) {
+          setThemeState(savedTheme as Theme);
+        }
+      } catch (error) {
+        console.error('Failed to load theme:', error);
+      }
+    };
+    loadTheme();
+  }, []);
+
   const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setThemeState((prev) => {
+      const newTheme = prev === 'light' ? 'dark' : 'light';
+      AsyncStorage.setItem('theme', newTheme).catch((error) =>
+        console.error('Failed to save theme:', error)
+      );
+      return newTheme;
+    });
   };
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
+    AsyncStorage.setItem('theme', newTheme).catch((error) =>
+      console.error('Failed to save theme:', error)
+    );
   };
 
   return (

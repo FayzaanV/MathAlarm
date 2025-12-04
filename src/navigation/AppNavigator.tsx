@@ -16,7 +16,6 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// 🚀 Add your deep link config here
 const linking = {
   prefixes: ['mathalarm://'],   // Your custom URL scheme
   config: {

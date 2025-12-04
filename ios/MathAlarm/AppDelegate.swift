@@ -9,6 +9,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
+  
+  func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+    ) -> Bool {
+        // Pass the incoming URL to the React Native linking manager
+        return React.RCTLinkingManager.application(app, open: url, options: options)
+    }
 
   func application(
     _ application: UIApplication,
