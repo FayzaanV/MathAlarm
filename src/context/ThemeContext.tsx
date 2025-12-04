@@ -1,6 +1,13 @@
 // src/context/ThemeContext.tsx
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Safely import AsyncStorage - it may be null if native module isn't linked
+let AsyncStorage: any = null;
+try {
+  AsyncStorage = require('@react-native-async-storage/async-storage').default;
+} catch (error) {
+  console.warn('AsyncStorage not available:', error);
+}
 
 export type Theme = 'light' | 'dark';
 
@@ -23,6 +30,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const loadTheme = async () => {
+      if (!AsyncStorage) {
+        console.warn('AsyncStorage not available, using default theme');
+        return;
+      }
       try {
         const savedTheme = await AsyncStorage.getItem('theme');
         if (savedTheme) {
@@ -38,18 +49,22 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const toggleTheme = () => {
     setThemeState((prev) => {
       const newTheme = prev === 'light' ? 'dark' : 'light';
-      AsyncStorage.setItem('theme', newTheme).catch((error) =>
-        console.error('Failed to save theme:', error)
-      );
+      if (AsyncStorage) {
+        AsyncStorage.setItem('theme', newTheme).catch((error) =>
+          console.error('Failed to save theme:', error)
+        );
+      }
       return newTheme;
     });
   };
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    AsyncStorage.setItem('theme', newTheme).catch((error) =>
-      console.error('Failed to save theme:', error)
-    );
+    if (AsyncStorage) {
+      AsyncStorage.setItem('theme', newTheme).catch((error) =>
+        console.error('Failed to save theme:', error)
+      );
+    }
   };
 
   return (
